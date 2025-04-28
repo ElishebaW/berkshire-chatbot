@@ -40,3 +40,4 @@ Thumbs.db
 ehthumbs.db
 .DS_Store
 Icon?
+frontend/node_modules/
