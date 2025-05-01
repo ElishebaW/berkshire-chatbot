@@ -1,24 +1,31 @@
 package com.example.ragchatbot.controller;
 
 import com.example.ragchatbot.service.ChatService;
+
+import lombok.RequiredArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ChatController {
-    @Autowired
+
     private ChatService chatService;
+
+    @Value("${app.embed.file-path}")
+    private String filePath;
 
     @PostMapping("/embed")
     public String embedDocument() {
-        // Hardcoded path for now; can make configurable
-        String filePath = System.getProperty("user.home") + "/Documents/WEB past present future 2014.pdf";
         return chatService.embedPdf(filePath);
     }
 
     @PostMapping("/ask")
-    public String askQuestion(@RequestParam String question) {
+    public String askQuestion(@RequestParam @NotNull String question) {
         return chatService.askQuestion(question);
     }
 }
